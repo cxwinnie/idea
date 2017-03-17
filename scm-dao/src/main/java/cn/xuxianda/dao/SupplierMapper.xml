@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.xuxianda.dao.SupplierMapper" >
+  <resultMap id="supplierResultMap" type="cn.xuxianda.entity.Supplier" >
+    <id column="sup_id" property="supId" javaType="Long" />
+    <result column="sup_name" property="supName" jdbcType="VARCHAR" />
+    <result column="sup_linkman" property="supLinkman" jdbcType="VARCHAR" />
+    <result column="sup_phone" property="supPhone" jdbcType="VARCHAR" />
+    <result column="sup_address" property="supAddress" jdbcType="VARCHAR" />
+    <result column="sup_remark" property="supRemark" jdbcType="VARCHAR" />
+    <result column="sup_pay" property="supPay" jdbcType="DECIMAL" />
+    <result column="sup_type" property="supType" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <insert id="insert" parameterType="Supplier">
+  	insert into supplier(sup_id,sup_name,sup_linkman,sup_phone,sup_address,sup_remark,sup_pay,sup_type)
+  	values(#{supId},#{supName},#{supLinkman},#{supPhone},#{supAddress},#{supRemark},#{supPay},#{supType});
+  </insert>
+  
+  <!-- 通过关键字查询，返回数据集 -->
+  <select id="selectPageList" parameterType="Page" resultMap="supplierResultMap">
+	select t.* from supplier t where 1=1
+	<if test="keyWords!=null">
+		and t.sup_name like #{keyWords}
+	</if>
+	limit #{start},#{rows}
+  </select>
+  
+  <!-- 通过关键字分页查询，返回总记录数 -->
+  <select id="selectPageCount" parameterType="Page" resultType="Long">
+	  select count(1) from supplier t where 1=1
+	  <if test="keyWords != null">
+	  	and t.sup_name like #{keyWords}
+	  </if>
+  </select>
+  
+  <!-- 通过多条件查询，返回数据集 -->
+  <select id="selectPageListUseDyc" parameterType="Page" resultMap="supplierResultMap">
+	select t.* from supplier t where 1=1
+	<if test="paramEntity.supName!=null">
+		and t.sup_name like #{paramEntity.supName}
+	</if>
+	<if test="paramEntity.supAddress!=null">
+		and t.sup_address like #{paramEntity.supAddress}
+	</if>
+	limit #{start},#{rows}
+  </select>
+  
+  <!-- 通过多条件查询，返回总记录数 -->
+    <select id="selectPageCountUseDyc" parameterType="Page" resultType="Long">
+	  select count(1) from supplier t where 1=1
+		<if test="paramEntity.supName!=null">
+			and t.sup_name like #{paramEntity.supName}
+		</if>
+		<if test="paramEntity.supAddress!=null">
+			and t.sup_address like #{paramEntity.supAddress}
+		</if>
+  </select>
+  
+  <select id="select" parameterType="Supplier" resultMap="supplierResultMap"> 
+  	select t.* from supplier t where 1=1
+  	<if test="supId!=null">
+  		and t.sup_id = #{supId}
+  	</if>
+  </select>
+  
+  <!-- 批量删除供应商 -->
+  <delete id="deleteByIds">
+  	delete from supplier where sup_id in
+  	<foreach collection="array" open="(" close=")" separator="," item="ids" >
+  		#{ids}
+  	</foreach>
+  </delete>
+  
+  <update id="update" parameterType="Supplier">
+  	update supplier set
+  	sup_name = #{supName},sup_linkman = #{supLinkman},sup_phone = #{supPhone},sup_address = #{supAddress},sup_remark = #{supRemark},sup_pay = #{supPay},sup_type = #{supType}
+	where sup_id = #{supId}
+  </update>
+  
+</mapper>

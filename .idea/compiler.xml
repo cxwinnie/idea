@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="scm-action" />
+        <module name="scm-dao" />
+        <module name="scm-entity" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="scm-action" target="1.5" />
+      <module name="scm-dao" target="1.5" />
+      <module name="scm-entity" target="1.5" />
+      <module name="scm-parent" target="1.5" />
+      <module name="scm-server" target="1.5" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

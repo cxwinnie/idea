@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.xuxianda.dao.DataElementNlvMapper" >
+  <resultMap id="DataElementNlvResultMap" type="cn.xuxianda.entity.DataElementNlv" >
+    <id column="data_element_nlv_id" property="dataElementNlvId" jdbcType="INTEGER" />
+    <result column="data_element_id" property="dataElementId" jdbcType="BIGINT" />
+    <result column="language" property="language" jdbcType="VARCHAR" />
+    <result column="key" property="key" jdbcType="VARCHAR" />
+    <result column="text" property="text" jdbcType="VARCHAR" />
+  </resultMap>
+ 
+  <select id="selectByFK" parameterType="long" resultMap="DataElementNlvResultMap">
+  	select t.* from data_element_nlv t where 1=1
+  	<if test="dataElementId!=null">
+  		and t.data_element_id = #{dataElementId}
+  	</if>
+  </select>  
+  
+</mapper>

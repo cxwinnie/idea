@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.xuxianda.dao.AccountMapper" >
+    <resultMap id="accountResultMap" type="cn.xuxianda.entity.Account">
+        <id column="acc_id" property="accId" jdbcType="INTEGER"/>
+        <result column="acc_login" property="accLogin" jdbcType="VARCHAR"/>
+        <result column="acc_name" property="accName" jdbcType="VARCHAR"/>
+        <result column="acc_pass" property="accPass" jdbcType="VARCHAR"/>
+        <result column="head_image" property="headImage" jdbcType="VARCHAR"/>
+        <result column="salt" property="salt" jdbcType="VARCHAR"/>
+        <result column="locked" property="locked" jdbcType="BOOLEAN"/>
+    </resultMap>
+
+    <select id="login" parameterType="Account" resultMap="accountResultMap">
+        select t.* from account t where t.acc_login = #{accLogin} and t.acc_pass = #{accPass}
+    </select>
+
+    <update id="updateSelectParams" parameterType="Account">
+        update account
+        <set>
+            <if test="headImage!=null">
+                head_image = #{headImage}
+            </if>
+        </set>
+        where acc_id = #{accId}
+    </update>
+
+    <select id="findAccountByAccountLogin" parameterType="string" resultMap="accountResultMap">
+        select t.* from account t where t.acc_login = #{accLogin}
+    </select>
+</mapper>
